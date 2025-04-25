@@ -1,0 +1,9 @@
+﻿  Project.cpp
+C:\Users\danil\Desktop\P\Project\Project.cpp(5,21): warning C4244: инициализация: преобразование "double" в "int64_t", возможна потеря данных
+C:\Users\danil\Desktop\P\Project\Project.cpp(50,31): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\danil\Desktop\P\Project\Project.cpp(52,35): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\danil\Desktop\P\Project\Project.cpp(64,27): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\danil\Desktop\P\Project\Project.cpp(80,27): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\danil\Desktop\P\Project\Project.cpp(82,31): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\danil\Desktop\P\Project\Project.cpp(90,27): warning C4018: <: несоответствие типов со знаком и без знака
+  Project.vcxproj -> C:\Users\danil\Desktop\P\Project\x64\Debug\Project.exe
