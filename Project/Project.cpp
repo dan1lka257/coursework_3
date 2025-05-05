@@ -1,55 +1,69 @@
 ﻿#include <iostream>
 #include <algorithm>
 #include <vector>
+#include <limits>
 
-const int64_t INF = 1e9;
+template <typename T>
+const T INF = std::numeric_limits<T>::max();
 
+template <typename T, typename U = int64_t>
+struct Edge {
+    U from;
+    U to;
+    T cost;
+    Edge() = default;
+    Edge(U from, U to, T cost) : from(from), to(to), cost(cost) {}
+};
+
+template <typename T, typename U = int64_t>
 struct Edges {
-    std::vector<std::vector<int64_t>> edges;
-    int64_t n, m;
-    Edges(int64_t n, int64_t m): n(n), m(m) {
-        edges.resize(m, std::vector<int64_t> {});
+    std::vector<Edge<T, U>> edges;
+    T vertexCount, edgeCount;
+    Edges(T vertexCount, T edgeCount): vertexCount(vertexCount), edgeCount(edgeCount) {
+        edges.resize(edgeCount, Edge<T, U>{});
     }
     void input() {
-        for (int64_t i = 0; i < m; ++i) {
-            int64_t from, to, cost;
+        for (T i = 0; i < edgeCount; ++i) {
+            T from, to;
+            U cost;
             std::cin >> from >> to >> cost;
             edges[i] = { from, to, cost };
         }
     }
-    void show() {
-        for (auto v : edges) {
-            std::cout << "from " << v[0] << ", to " << v[1] << ", for" << v[2] << "\n";
+    void show() const {
+        for (auto edge : edges) {
+            std::cout << "from " << edge.from << ", to " << edge.to << ", for" << edge.cost << "\n";
         }
     }
 };
 
+template <typename T, typename U = int64_t>
 struct Graph {
-    std::vector<std::vector<std::pair<int64_t, int64_t>>> neig;
-    int64_t n, m;
-    Graph(int64_t n, int64_t m): n(n), m(m) {
-        neig.resize(n + 1, std::vector<std::pair<int64_t, int64_t>> {});
+    std::vector<std::vector<std::pair<U, T>>> neig;
+    U n, m;
+    Graph(U n, U m): n(n), m(m) {
+        neig.resize(n + 1, std::vector<std::pair<U, T>> {});
     }
-    Graph(Edges& edges): n(edges.n), m(edges.m) {
-        neig.resize(n + 1, std::vector<std::pair<int64_t, int64_t>> {});
+    Graph(Edges<T, U>& edges): n(edges.vertexCount), m(edges.edgeCount) {
+        neig.resize(n + 1, std::vector<std::pair<U, T>> {});
         for (auto v : edges.edges) {
             neig[v[0]].emplace_back(std::make_pair(v[1], v[2]));
             neig[v[1]].emplace_back(std::make_pair(v[0], v[2]));
         }
-
     }
     void input() {
-        for (int64_t i = 0; i < m; ++i) {
-            int64_t from, to, cost;
+        for (U i = 0; i < m; ++i) {
+            U from, to;
+            T cost;
             std::cin >> from >> to >> cost;
             neig[from].emplace_back(std::make_pair(to, cost));
             neig[to].emplace_back(std::make_pair(from, cost));
         }
     }
     void show() const {
-        for (int64_t i = 0; i < neig.size(); ++i) {
+        for (U i = 0; i < neig.size(); ++i) {
             std::cout << i << ": ";
-            for (int64_t j = 0; j < neig[i].size(); ++j) {
+            for (U j = 0; j < neig[i].size(); ++j) {
                 std::cout << "(to " << neig[i][j].first << ", for " << neig[i][j].second << ") ";
             }
             std::cout << "\n";
@@ -59,7 +73,7 @@ struct Graph {
 
 // TODO: IMPLEMENT BINARY HEAP INSTEAD LINEAR SEARCH
 int64_t find_min(std::vector<int64_t>& dist, std::vector<int64_t>& used) {
-    int64_t min_value = INF;
+    int64_t min_value = INF<int64_t>;
     int64_t min_ind = -1;
     for (int64_t i = 0; i < dist.size(); ++i) {
         if (min_value >= dist[i] && !used[i]) {
@@ -71,15 +85,16 @@ int64_t find_min(std::vector<int64_t>& dist, std::vector<int64_t>& used) {
     return min_ind;
 }
 
-Graph Prim(Graph& graph) {
-    Graph new_graph(graph.n, 0);
-    std::vector<std::pair<int64_t, int64_t>> parent(graph.n + 1, std::make_pair(-1, -1));
-    std::vector<int64_t> dist(graph.n + 1, INF);
-    std::vector<int64_t> used(graph.n + 1, 0);
+template <typename T, typename U = int64_t>
+Graph<T, U> Prim(Graph<T, U>& graph) {
+    Graph<T, U> new_graph(graph.n, 0);
+    std::vector<std::pair<T, U>> parent(graph.n + 1, std::make_pair(-1, -1));
+    std::vector<U> dist(graph.n + 1, INF<U>);
+    std::vector<U> used(graph.n + 1, 0);
     dist[1] = 0;
-    for (int64_t i = 0; i < graph.neig.size(); ++i) {
-        int64_t min_ind = find_min(dist, used);
-        for (int64_t j = 0; j < graph.neig[min_ind].size(); ++j) {
+    for (U i = 0; i < graph.neig.size(); ++i) {
+        U min_ind = find_min(dist, used);
+        for (U j = 0; j < graph.neig[min_ind].size(); ++j) {
             if (dist[graph.neig[min_ind][j].first] > graph.neig[min_ind][j].second && !used[graph.neig[min_ind][j].first]) {
                 dist[graph.neig[min_ind][j].first] = graph.neig[min_ind][j].second;
                 parent[graph.neig[min_ind][j].first].second = graph.neig[min_ind][j].second;
@@ -87,7 +102,7 @@ Graph Prim(Graph& graph) {
             }
         }
     }
-    for (int64_t i = 0; i < parent.size(); ++i) {
+    for (U i = 0; i < parent.size(); ++i) {
         if (parent[i].first != -1) {
             new_graph.neig[i].emplace_back(std::make_pair(parent[i].first, parent[i].second));
             new_graph.neig[parent[i].first].emplace_back(std::make_pair(i, parent[i].second));
@@ -135,7 +150,8 @@ bool comp(std::vector<int64_t> a, std::vector<int64_t> b) {
     return a[2] < b[2];
 }
 
-Graph Kruskal(Edges& edges) {
+template <typename T, typename U = int64_t>
+Graph<T, U> Kruskal(Edges<T, U>& edges) {
     Edges new_edges(edges.n, 0);
     sort(edges.edges.begin(), edges.edges.end(), comp);
     Dsu dsu(edges.n + 1);
@@ -145,21 +161,21 @@ Graph Kruskal(Edges& edges) {
             new_edges.edges.emplace_back(edge);
         }
     }
-    Graph graph(new_edges);
+    Graph<T, U> graph(new_edges);
     return graph;
 }
 
 int main() {
     int64_t n, m;
     std::cin >> n >> m;
-    Edges edges(n, m);
+    Edges<int64_t> edges(n, m);
     edges.input();
-    Graph kruskal_graph = Kruskal(edges);
+    Graph<int64_t> kruskal_graph = Kruskal(edges);
     std::cout << "KRUSKAL:\n";
     kruskal_graph.show();
 
-    Graph graph(edges);
-    Graph prim_graph = Prim(graph);
+    Graph<int64_t> graph(edges);
+    Graph<int64_t> prim_graph = Prim(graph);
     std::cout << "PRIM:\n";
     prim_graph.show();
     /*

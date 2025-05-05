@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\danil\\Desktop\\P\\Project\\",
+  "WorkspaceRootPath": "C:\\Users\\danil\\Desktop\\coursework 3\\Project\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4687AD23-F5F7-463F-85DB-4C53364F4D11}|Project.vcxproj|C:\\Users\\danil\\Desktop\\P\\Project\\Project.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{4687AD23-F5F7-463F-85DB-4C53364F4D11}|Project.vcxproj|C:\\Users\\danil\\Desktop\\coursework 3\\Project\\Project.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{4687AD23-F5F7-463F-85DB-4C53364F4D11}|Project.vcxproj|solutionrelative:Project.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -20,11 +20,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Project.cpp",
-              "DocumentMoniker": "C:\\Users\\danil\\Desktop\\P\\Project\\Project.cpp",
+              "DocumentMoniker": "C:\\Users\\danil\\Desktop\\coursework 3\\Project\\Project.cpp",
               "RelativeDocumentMoniker": "Project.cpp",
-              "ToolTip": "C:\\Users\\danil\\Desktop\\P\\Project\\Project.cpp",
-              "RelativeToolTip": "Project.cpp",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAAAKcAAAAJAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\danil\\Desktop\\coursework 3\\Project\\Project.cpp*",
+              "RelativeToolTip": "Project.cpp*",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAAC8AAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-11-14T19:41:31.034Z",
               "EditorCaption": ""
