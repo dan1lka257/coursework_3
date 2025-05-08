@@ -1,10 +1,21 @@
 ﻿#include <iostream>
 #include <algorithm>
 #include <vector>
+#include <unordered_set>
 #include <limits>
+#include <random>
 
 template <typename T>
 const T INF = std::numeric_limits<T>::max();
+
+template<typename U>
+struct std::hash<std::pair<U, U>> {
+    size_t operator()(const std::pair<U, U>& p) const {
+        auto hash1 = std::hash<U>{}(p.first);
+        auto hash2 = std::hash<U>{}(p.second);
+        return hash1 ^ (hash2 << 1);
+    }
+};
 
 template <typename T, typename U>
 struct Edge {
@@ -18,21 +29,55 @@ struct Edge {
 template <typename T, typename U>
 struct Edges {
     std::vector<Edge<T, U>> edges;
-    T vertexCount, edgeCount;
-    Edges(T vertexCount, T edgeCount): vertexCount(vertexCount), edgeCount(edgeCount) {
-        edges.resize(edgeCount, Edge<T, U>{});
+    U vertexCount, edgeCount;
+    Edges(U vertexCount, U edgeCount): vertexCount(vertexCount), edgeCount(edgeCount) {
+        if (edgeCount > (vertexCount * (vertexCount - 1)) / 2) {
+            throw std::exception("Invalid edge count");
+        }
     }
     void input() {
-        for (T i = 0; i < edgeCount; ++i) {
-            T from, to;
-            U cost;
+        for (U i = 0; i < edgeCount; ++i) {
+            U from, to;
+            T cost;
             std::cin >> from >> to >> cost;
             edges[i] = { from, to, cost };
         }
     }
+    void fill() {
+        std::mt19937 gen(42);
+        std::uniform_int_distribution<> vertexGenerator(1, static_cast<int>(vertexCount));
+        std::uniform_real_distribution<T> distGenerator(0.0, 1.0);
+
+        std::unordered_set<std::pair<U, U>> edges_uset;
+        for (U i = 1; i < vertexCount + 1; ++i) {
+            U new_from = i;
+            U new_to = i % vertexCount + 1;
+            if (new_from > new_to) {
+                std::swap(new_from, new_to);
+            }
+            T new_cost = distGenerator(gen);
+            edges.push_back(Edge<T, U>(new_from, new_to, new_cost));
+            edges_uset.insert(std::make_pair(new_from, new_to));
+        }
+        for (U i = 1; i < edgeCount - vertexCount + 1; ++i) {
+            U new_from = vertexGenerator(gen);
+            U new_to = vertexGenerator(gen);
+            if (new_from > new_to) {
+                std::swap(new_from, new_to);
+            }
+            T new_cost = distGenerator(gen);
+            Edge<T, U> new_edge = Edge<T, U>(new_from, new_to, new_cost);
+            if (new_from == new_to || edges_uset.count(std::pair<U, U>(new_from, new_to))) {
+                --i;
+                continue;
+            }
+            edges.push_back(new_edge);
+            edges_uset.insert(std::pair<U, U>(new_from, new_to));
+        }
+    }
     void show() const {
-        for (auto edge : edges) {
-            std::cout << "from " << edge.from << ", to " << edge.to << ", for" << edge.cost << "\n";
+        for (const auto& edge : edges) {
+            std::cout << "from " << edge.from << ", to " << edge.to << ", for " << edge.cost << "\n";
         }
     }
 };
@@ -87,31 +132,31 @@ struct Graph {
     }
 };
 
-template <typename T>
+template <typename T, typename U = int64_t>
 class BinaryHeap {
 private:
     std::vector<T> heap;
 
-    size_t parent(size_t i) const { return (i - 1) / 2; }
-    size_t left_child(size_t i) const { return 2 * i + 1; }
-    size_t right_child(size_t i) const { return 2 * i + 2; }
+    U parent(U i) const { return (i - 1) / 2; }
+    U left_child(U i) const { return 2 * i + 1; }
+    U right_child(U i) const { return 2 * i + 2; }
 
-    void sift_up(size_t i) {
+    void sift_up(U i) {
         while (i > 0 && heap[parent(i)] > heap[i]) {
             std::swap(heap[parent(i)], heap[i]);
             i = parent(i);
         }
     }
 
-    void sift_down(size_t i) {
-        size_t min_index = i;
-        size_t left = left_child(i);
-        size_t right = right_child(i);
+    void sift_down(U i) {
+        U min_index = i;
+        U left = left_child(i);
+        U right = right_child(i);
 
-        if (left < heap.size() && heap[left] < heap[min_index]) {
+        if (left < static_cast<U>(heap.size()) && heap[left] < heap[min_index]) {
             min_index = left;
         }
-        if (right < heap.size() && heap[right] < heap[min_index]) {
+        if (right < static_cast<U>(heap.size()) && heap[right] < heap[min_index]) {
             min_index = right;
         }
         if (i != min_index) {
@@ -162,7 +207,7 @@ U find_min(BinaryHeap<std::pair<T, U>>& dist, std::vector<U>& used) {
 template <typename T, typename U>
 Graph<T, U> Prim(Graph<T, U>& graph) {
     Graph<T, U> new_graph(graph.vertexCount, 0);
-    std::vector<std::pair<T, U>> parent(graph.vertexCount + 1, std::make_pair(-1, -1));
+    std::vector<std::pair<U, T>> parent(graph.vertexCount + 1, std::pair<U, T>(-1, -1));
     std::vector<U> used(graph.vertexCount + 1, 0);
     BinaryHeap<std::pair<T, U>> dist;
     dist.push({ 0, 1 }); 
@@ -182,8 +227,8 @@ Graph<T, U> Prim(Graph<T, U>& graph) {
     }
     for (U i = 0; i < static_cast<U>(parent.size()); ++i) {
         if (parent[i].first != -1) {
-            new_graph.neig[i].emplace_back(std::make_pair(parent[i].first, parent[i].second));
-            new_graph.neig[parent[i].first].emplace_back(std::make_pair(i, parent[i].second));
+            new_graph.neig[i].emplace_back(std::pair<U, T>(parent[i].first, parent[i].second));
+            new_graph.neig[parent[i].first].emplace_back(std::pair<U, T>(i, parent[i].second));
         }
     }
     return new_graph;
@@ -245,7 +290,7 @@ Graph<T, U> Kruskal(Edges<T, U>& edges) {
     return graph;
 }
 
-int main() {
+int test() {
     int64_t n, m;
     std::cin >> n >> m;
     Edges<int64_t, int64_t> edges(n, m);
@@ -270,4 +315,23 @@ int main() {
     4 5 2
     5 6 4
     */
+    return 0;
+}
+
+int main() {
+    int64_t n, m;
+    std::cin >> n >> m;
+    Edges<double, int64_t> edges(n, m);
+    edges.fill();
+    edges.show();
+    Graph<double, int64_t> kruskal_graph = Kruskal(edges);
+    std::cout << "KRUSKAL:\n";
+    kruskal_graph.show();
+
+    Graph<double, int64_t> graph(edges);
+    Graph<double, int64_t> prim_graph = Prim(graph);
+    std::cout << "PRIM:\n";
+    prim_graph.show();
+
+    std::cout << (kruskal_graph == prim_graph) << "\n";
 }
