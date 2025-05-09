@@ -1,9 +1,12 @@
 ﻿#include <iostream>
+#include <fstream>
 #include <algorithm>
 #include <vector>
 #include <unordered_set>
 #include <limits>
 #include <random>
+#include <chrono>
+#include <cmath>
 
 template <typename T>
 const T INF = std::numeric_limits<T>::max();
@@ -319,19 +322,72 @@ int test() {
 }
 
 int main() {
-    int64_t n, m;
-    std::cin >> n >> m;
-    Edges<double, int64_t> edges(n, m);
-    edges.fill();
-    edges.show();
-    Graph<double, int64_t> kruskal_graph = Kruskal(edges);
-    std::cout << "KRUSKAL:\n";
-    kruskal_graph.show();
+    std::ofstream kruskalFile1("../kruskalFile1.txt");
+    std::ofstream kruskalFile2("../kruskalFile2.txt");
+    std::ofstream kruskalFile3("../kruskalFile3.txt");
 
-    Graph<double, int64_t> graph(edges);
-    Graph<double, int64_t> prim_graph = Prim(graph);
-    std::cout << "PRIM:\n";
-    prim_graph.show();
+    std::ofstream primFile1("../primFile1.txt");
+    std::ofstream primFile2("../primFile2.txt");
+    std::ofstream primFile3("../primFile3.txt");
 
-    std::cout << (kruskal_graph == prim_graph) << "\n";
+    int64_t maxVertexCount = 2000;
+    int64_t vertexStep = 200;
+
+    for (int64_t n = 10; n < maxVertexCount; n += vertexStep) {
+        int64_t m = 2 * n;
+        Edges<double, int64_t> edges(n, m);
+        edges.fill();
+
+        auto startKruskal = std::chrono::high_resolution_clock::now();
+        Graph<double, int64_t> kruskal_graph = Kruskal(edges);
+        auto endKruskal = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> durationKruskal = endKruskal - startKruskal;
+        kruskalFile1 << n << " " << durationKruskal.count() << "\n";
+
+        Graph<double, int64_t> graph(edges);
+
+        auto startPrim = std::chrono::high_resolution_clock::now();
+        Graph<double, int64_t> prim_graph = Prim(graph);
+        auto endPrim = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> durationPrim = endPrim - startPrim;
+        primFile1 << n << " " << durationPrim.count() << "\n";
+    }
+    for (int64_t n = 10; n < maxVertexCount; n += vertexStep) {
+        int64_t m = n * static_cast<int64_t>(std::sqrt(n));
+        Edges<double, int64_t> edges(n, m);
+        edges.fill();
+
+        auto startKruskal = std::chrono::high_resolution_clock::now();
+        Graph<double, int64_t> kruskal_graph = Kruskal(edges);
+        auto endKruskal = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> durationKruskal = endKruskal - startKruskal;
+        kruskalFile2 << n << " " << durationKruskal.count() << "\n";
+
+        Graph<double, int64_t> graph(edges);
+
+        auto startPrim = std::chrono::high_resolution_clock::now();
+        Graph<double, int64_t> prim_graph = Prim(graph);
+        auto endPrim = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> durationPrim = endPrim - startPrim;
+        primFile2 << n << " " << durationPrim.count() << "\n";
+    }
+    for (int64_t n = 10; n < maxVertexCount; n += vertexStep) {
+        int64_t m = n * n / 4;
+        Edges<double, int64_t> edges(n, m);
+        edges.fill();
+
+        auto startKruskal = std::chrono::high_resolution_clock::now();
+        Graph<double, int64_t> kruskal_graph = Kruskal(edges);
+        auto endKruskal = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> durationKruskal = endKruskal - startKruskal;
+        kruskalFile3 << n << " " << durationKruskal.count() << "\n";
+
+        Graph<double, int64_t> graph(edges);
+
+        auto startPrim = std::chrono::high_resolution_clock::now();
+        Graph<double, int64_t> prim_graph = Prim(graph);
+        auto endPrim = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> durationPrim = endPrim - startPrim;
+        primFile3 << n << " " << durationPrim.count() << "\n";
+    }
 }
