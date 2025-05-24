@@ -1,0 +1,8 @@
+﻿  graph_algorithms_unit_test.cpp
+C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_functions.h(24,11): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_functions.h(50,44): warning C4804: +=: небезопасное использование типа "bool" в операции
+C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_functions.h(51,44): warning C4804: +=: небезопасное использование типа "bool" в операции
+C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_functions.h(52,44): warning C4804: +=: небезопасное использование типа "bool" в операции
+C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_functions.h(112,11): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\graph_functions.h(146,86): warning C4267: return: преобразование из "size_t" в "int"; возможна потеря данных
+  graph_algorithms_unit_test.vcxproj -> C:\Users\Danil\Desktop\Graphs and etc\graph_algorithms\x64\Debug\graph_algorithms_unit_test.dll

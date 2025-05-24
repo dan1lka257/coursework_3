@@ -1,0 +1,35 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{\numberline {1}Вступление}{4}{}%
+\contentsline {subsection}{\numberline {1.1}Цели и задачи работы}{4}{}%
+\contentsline {subsection}{\numberline {1.2}Актуальность работы}{4}{}%
+\contentsline {section}{\numberline {2}Теоретическая часть}{5}{}%
+\contentsline {subsection}{\numberline {2.1}Описание}{5}{}%
+\contentsline {subsection}{\numberline {2.2}Введение в теорию графов и построение трёхцветного графа по каскаду}{5}{}%
+\contentsline {section}{\numberline {3}Алгоритмическая часть}{9}{}%
+\contentsline {subsection}{\numberline {3.1}Структура программы}{9}{}%
+\contentsline {subsection}{\numberline {3.2}Проверка введённого трёхцветного графа на корректность}{9}{}%
+\contentsline {subsection}{\numberline {3.3}Проверка поверхности на ориентируемость}{10}{}%
+\contentsline {subsection}{\numberline {3.4}Генератор графов по заданной характеристике Эйлера и числу сёдел}{11}{}%
+\contentsline {subsection}{\numberline {3.5}Поиск соседних неподвижных точек}{12}{}%
+\contentsline {subsection}{\numberline {3.6}Нахождение сепаратрис}{13}{}%
+\contentsline {subsection}{\numberline {3.7}Unit-тестирование}{14}{}%
+\contentsline {section}{\numberline {4}Графическая часть}{15}{}%
+\contentsline {subsection}{\numberline {4.1}Работа с библиотекой Manim}{15}{}%
+\contentsline {subsection}{\numberline {4.2}Запуск и результат работы программы}{15}{}%
+\contentsline {section}{\numberline {5}Ссылка на репозиторий в Github}{16}{}%
+\contentsline {section}{\numberline {6}Код графической части}{16}{}%
+\contentsline {section}{\numberline {7}Код алгоритмической части}{18}{}%
+\contentsline {subsection}{\numberline {7.1}Поиск в ширину}{18}{}%
+\contentsline {subsection}{\numberline {7.2}Проверка на трёхцветность, неориентируемость и отсутствие петель}{18}{}%
+\contentsline {subsection}{\numberline {7.3}Проверка на связность}{19}{}%
+\contentsline {subsection}{\numberline {7.4}Поиск цикла}{19}{}%
+\contentsline {subsection}{\numberline {7.5}Поиск циклов}{20}{}%
+\contentsline {subsection}{\numberline {7.6}Проверка на допустимость}{21}{}%
+\contentsline {subsection}{\numberline {7.7}Подсчёт Эйлеровой характеристики}{21}{}%
+\contentsline {subsection}{\numberline {7.8}Проверка поверхности на ориентируемость}{21}{}%
+\contentsline {subsection}{\numberline {7.9}Генератор трёхцветных графов}{22}{}%
+\contentsline {subsection}{\numberline {7.10}Поиск соседей}{25}{}%
+\contentsline {subsection}{\numberline {7.11}Проверка сепаратрис на пересечение}{26}{}%
+\contentsline {subsection}{\numberline {7.12}Поиск сепаратрис 1}{27}{}%
+\contentsline {subsection}{\numberline {7.13}Поиск сепаратрис 2}{30}{}%
+\contentsline {section}{\numberline {8}Список литературы}{35}{}%

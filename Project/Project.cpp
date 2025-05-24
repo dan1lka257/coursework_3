@@ -330,8 +330,8 @@ int main() {
     std::ofstream primFile2("../primFile2.txt");
     std::ofstream primFile3("../primFile3.txt");
 
-    int64_t maxVertexCount = 2000;
-    int64_t vertexStep = 200;
+    int64_t maxVertexCount = 3000;
+    int64_t vertexStep = 50;
 
     for (int64_t n = 10; n < maxVertexCount; n += vertexStep) {
         int64_t m = 2 * n;

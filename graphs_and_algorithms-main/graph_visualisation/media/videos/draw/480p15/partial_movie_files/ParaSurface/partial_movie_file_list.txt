@@ -1,0 +1,2 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/Danil/Desktop/Graphs and etc/graph_visualisation/media/videos/draw/480p15/partial_movie_files/ParaSurface/3490075478_2417330461_446028411.mp4'
